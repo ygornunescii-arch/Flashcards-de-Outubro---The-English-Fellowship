@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The English Fellowship · Flashcards de Outubro</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap">
+<style>
+:root{--bg:#f3f1ee;--ink:#1c1c1c;--mute:#6b6b6b;--front:#dfe9e2;--back:#dde6f1;--line:#c9c9c4;--ok:#2f7d4f;--rev:#b4443a;--chip:#eef2ee;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#191919;--ink:#f0f0ee;--mute:#9a9a96;--front:#243a30;--back:#22334d;--line:#3a3a38;--ok:#5fc089;--rev:#e5786d;--chip:#213228}}
+:root[data-theme="dark"]{--bg:#191919;--ink:#f0f0ee;--mute:#9a9a96;--front:#243a30;--back:#22334d;--line:#3a3a38;--ok:#5fc089;--rev:#e5786d;--chip:#213228}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,sans-serif;min-height:100vh}
+main{max-width:620px;margin:0 auto;padding:22px 16px 36px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.home{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:.85rem;color:var(--ink);text-decoration:none;border:1px solid var(--line);padding:7px 11px;border-radius:9px;white-space:nowrap}
+h1{font-size:1.3rem;font-weight:800;margin:0 0 2px}
+.sub{color:var(--mute);margin:0 0 16px;font-size:.88rem}
+.bar{height:5px;background:var(--line);border-radius:3px;overflow:hidden;margin-bottom:6px}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+.stats{display:flex;justify-content:space-between;color:var(--mute);font-size:.82rem;margin-bottom:14px}
+.stats b{color:var(--ink)}
+.scene{perspective:1400px;cursor:pointer;outline:none}
+.card{position:relative;min-height:300px;transform-style:preserve-3d;transition:transform .45s}
+.card.flip{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:16px;padding:24px;overflow:auto}
+.f{background:var(--front);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center}
+.f .term{font-size:clamp(1.5rem,6vw,2.1rem);font-weight:800;line-height:1.2;overflow-wrap:anywhere}
+.f .hint{color:var(--mute);font-size:.85rem}
+.b{background:var(--back);transform:rotateY(180deg);display:flex;flex-direction:column;gap:16px}
+.blk{display:flex;flex-direction:column;gap:6px}
+.label{font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--mute)}
+.ln{margin:0;line-height:1.42;font-size:1rem}
+.ln b{font-weight:800}
+.ln.pt{color:var(--mute);font-style:italic;font-size:.94rem}
+hr{border:none;border-top:1px solid var(--line);margin:0}
+.spk{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--chip);color:var(--ink);font:inherit;font-weight:600;font-size:.76rem;padding:5px 10px;border-radius:999px;cursor:pointer;width:fit-content;margin-top:2px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.actions button{font:inherit;font-weight:800;font-size:1rem;border:none;border-radius:12px;padding:16px 10px;cursor:pointer;color:#fff}
+.actions .rev{background:var(--rev)}
+.actions .ok{background:var(--ok)}
+.util{display:flex;justify-content:center;gap:18px;margin-top:14px}
+.util button{font:inherit;font-size:.82rem;color:var(--mute);background:none;border:none;text-decoration:underline;cursor:pointer;padding:4px}
+.end{text-align:center;padding:50px 10px}
+.end button{margin-top:14px;font:inherit;font-weight:700;border:1px solid var(--line);background:var(--chip);color:var(--ink);padding:10px 16px;border-radius:10px;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.card{transition:none}.bar i{transition:none}}
+</style>
+</head>
+<body>
+<main>
+<div class="top">
+<div>
+<h1>Flashcards · Outubro 2026</h1>
+<p class="sub" style="margin:0">Toque no cartão para virar</p>
+</div>
+<a class="home" href="https://app.notion.com/p/336f86924cc280588891fc5deb3a209e">🏠 Notion</a>
+</div>
+<div class="bar"><i id="pb"></i></div>
+<div class="stats"><span id="pos"></span><span id="sc"></span></div>
+<div id="stage"></div>
+<div class="actions" id="actions">
+<button class="rev" id="bRev">🔁 Revisar</button><button class="ok" id="bOk">✅ Já sei</button>
+</div>
+<div class="util">
+<button id="shuf">Embaralhar</button><button id="reset">Recomeçar</button>
+</div>
+</main>
+<script>
+var ALL=[
+["TO GET THE HANG OF IT","To get the hang of it — to learn how to do something or become comfortable with it through practice.","Aprender a fazer algo; pegar o jeito; pegar a prática.","It took me a few weeks to get the hang of it, but now I can do it without even thinking about it.","Levei algumas semanas para pegar o jeito, mas agora consigo fazer isso sem nem precisar pensar."],
+["IDLE","Idle — not active or working; not doing anything.","Ocioso; inativo; desocupado; sem fazer nada.","He spent the whole afternoon idle instead of looking for a job.","Ele passou a tarde inteira sem fazer nada em vez de procurar emprego."],
+["TO SET SOMEONE UP","To set someone up — to trick someone or make them appear guilty of something they didn't do.","Armar para alguém; incriminar alguém por algo que não fez.","Someone set me up, and now everyone thinks I stole the money!","Armaram para mim, e agora todo mundo acha que eu roubei o dinheiro!"],
+["UNDER THE WEATHER","Under the weather — feeling sick or unwell.","Estar se sentindo mal, indisposto ou doente.","I've been feeling under the weather lately.","Tenho me sentido indisposto ultimamente."],
+["OUT OF HAND","“Out of hand” — difficult or impossible to control.","Fora de controle; difícil ou impossível de controlar.","The situation is getting out of hand.","A situação está ficando fora de controle."],
+["PULLING","Pulling — using force to move something toward you.","Puxando; usar força para trazer algo em sua direção.","He is pulling the rope.","Ele está puxando a corda."],
+["BARELY","“Barely” — only just; almost not.","Mal; por pouco; quase não.","I could barely hear you because the music was so loud.","Eu mal conseguia ouvir você porque a música estava muito alta."],
+["GROUNDBREAKING","Groundbreaking — introducing new ideas or methods that change the way people think or do things; innovative and original.","Inovador; revolucionário; pioneiro — algo que apresenta novas ideias ou muda a forma como as coisas são feitas.","The company developed a groundbreaking technology that could change the future of medicine.","A empresa desenvolveu uma tecnologia revolucionária que poderia mudar o futuro da medicina."],
+["CORNERSTONE","Cornerstone — something fundamental or essential that serves as the basis for something larger or more important.","Pilar; pedra angular; fundamento — algo essencial que serve de base para algo maior.","Trust is the cornerstone of any successful relationship.","A confiança é o pilar de qualquer relacionamento bem-sucedido."],
+["TO UNDERMINE","To undermine — to gradually weaken someone's confidence, authority, or the strength of something, often in a subtle way.","Minar; enfraquecer; prejudicar gradualmente a confiança ou a força de alguém ou de algo.","Constant criticism can undermine your confidence and make you doubt yourself.","Críticas constantes podem minar sua confiança e fazer você duvidar de si mesmo."],
+["PARAPHERNALIA","Paraphernalia — a collection of items, equipment, or accessories used for a particular activity or purpose.","Parafernália; conjunto de objetos ou acessórios usados para uma atividade específica.","He packed all his camping paraphernalia before heading into the mountains.","Ele guardou todos os seus equipamentos de acampamento antes de partir para as montanhas."],
+["RELENTLESS","Relentless — continuing with great determination and never giving up, even when things are difficult.","Incansável; implacável; persistente, mesmo diante das dificuldades.","She was relentless in pursuing her dreams, despite all the obstacles she faced.","Ela foi incansável na busca por seus sonhos, apesar de todos os obstáculos que enfrentou."],
+["COMPLACENCY","Complacency — a feeling of satisfaction with yourself that makes you stop trying to improve or ignore problems.","Complacência; autossatisfação; acomodação ao parar de buscar melhorias.","Success can lead to complacency if you stop challenging yourself.","O sucesso pode levar à acomodação se você parar de se desafiar."],
+["UPROAR","Uproar — a situation involving a lot of noise, anger, or strong public reaction.","Tumulto, alvoroço, grande comoção ou reação intensa do público.","The announcement caused an uproar among the employees.","O anúncio causou um grande alvoroço entre os funcionários."],
+["WILLPOWER","Willpower — the ability to control your thoughts, feelings, and actions, especially when it is difficult.","Força de vontade, autocontrole, determinação.","Learning a language requires patience, discipline, and willpower.","Aprender um idioma exige paciência, disciplina e força de vontade."],
+["THOROUGHNESS","Thoroughness — the quality of doing something carefully and completely, without missing important details.","Meticulosidade, minúcia, atenção aos detalhes.","Her thoroughness helped her find the mistake in the report.","A meticulosidade dela a ajudou a encontrar o erro no relatório."],
+["FLABBERGASTED","Flabbergasted — extremely surprised or shocked.","Atônito, boquiaberto, extremamente surpreso ou chocado.","I was absolutely flabbergasted when I heard the news.","Fiquei completamente boquiaberto quando ouvi a notícia."],
+["HEINOUS","Heinous — extremely evil, cruel, or shocking.","Hediondo, abominável, extremamente cruel.","The criminal was convicted of a heinous crime.","O criminoso foi condenado por um crime hediondo."],
+["SETBACK","Setback — a problem or difficulty that delays progress or makes it harder to achieve something.","Contratempo, revés, obstáculo; algo que atrasa o progresso.","Failing the test was a setback, but she didn't give up.","Reprovar na prova foi um contratempo, mas ela não desistiu."],
+["OFFSPRING","Offspring — a person's child or the young of an animal.","Filho, descendente, prole; filhotes de animais.","The lioness protects her offspring from danger.","A leoa protege seus filhotes do perigo."]
+];
+var deck=ALL.slice(),i=0,status={},flipped=false;
+var $=function(id){return document.getElementById(id)};
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;")}
+function best(){if(!window.speechSynthesis)return null;var v=(speechSynthesis.getVoices()||[]).filter(function(x){return /^en/i.test(x.lang)});var b=null,bs=-99;v.forEach(function(x){var n=x.name,sc=0;if(/en[-_]US/i.test(x.lang))sc+=2;if(/natural|neural|online/i.test(n))sc+=4;if(/premium|enhanced/i.test(n))sc+=4;if(/google us english/i.test(n))sc+=2;if(/samantha|aria|jenny|ava|allison|zoe|evan|nicky/i.test(n))sc+=2;if(/compact|espeak|novelty|whisper|bells|zarvox/i.test(n))sc-=4;if(sc>bs){bs=sc;b=x}});return b}
+function say(t){if(!window.speechSynthesis)return;speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=.92;var v=best();if(v){u.voice=v;u.lang=v.lang}speechSynthesis.speak(u)}
+if(window.speechSynthesis){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=function(){}}
+function spk(t){return '<button type="button" class="spk" data-t="'+esc(t)+'">🔊 Ouvir</button>'}
+
+function render(){
+ var st=$("stage");
+ if(!deck.length){
+  st.innerHTML='<div class="end"><h1>Nada por aqui 🎉</h1><p class="sub">Tudo revisado. Toque em Recomeçar para praticar de novo.</p><button id="rb">Recomeçar</button></div>';
+  $("rb").onclick=function(){status={};deck=ALL.slice();i=0;render()};
+  $("pos").textContent="";$("actions").style.display="none";updateStats();return;
+ }
+ $("actions").style.display="grid";
+ var c=deck[i];flipped=false;
+ st.innerHTML=
+  '<div class="scene" id="scene" tabindex="0" role="button" aria-label="Virar cartão">'+
+   '<div class="card" id="card">'+
+    '<div class="face f"><div class="term">'+esc(c[0])+'</div>'+spk(c[0])+'<div class="hint">toque para ver a definição</div></div>'+
+    '<div class="face b">'+
+     '<div class="blk"><span class="label">Definição</span>'+
+      '<p class="ln"><b>🇺🇸 '+esc(c[1])+'</b></p>'+spk(c[1])+
+      '<p class="ln pt">🇧🇷 '+esc(c[2])+'</p>'+
+     '</div>'+
+     '<hr/>'+
+     '<div class="blk"><span class="label">Exemplo</span>'+
+      '<p class="ln"><b>🇺🇸 '+esc(c[3])+'</b></p>'+spk(c[3])+
+      '<p class="ln pt">🇧🇷 '+esc(c[4])+'</p>'+
+     '</div>'+
+    '</div>'+
+   '</div>'+
+  '</div>';
+ $("scene").onclick=flip;
+ Array.prototype.forEach.call(document.querySelectorAll(".spk"),function(b){b.onclick=function(e){e.stopPropagation();say(b.getAttribute("data-t"))}});
+ $("pos").textContent="Cartão "+(i+1)+" de "+deck.length;
+ updateStats();
+}
+function flip(){flipped=!flipped;$("card").classList.toggle("flip",flipped)}
+function updateStats(){
+ var k=0,r=0;
+ for(var n=0;n<ALL.length;n++){var s=status[ALL[n][0]];if(s==="ok")k++;else if(s==="rev")r++}
+ $("sc").innerHTML="Sei: <b>"+k+"</b> · Revisar: <b>"+r+"</b>";
+ $("pb").style.width=(ALL.length?(k/ALL.length*100):0)+"%";
+}
+function go(d){if(!deck.length)return;i=(i+d+deck.length)%deck.length;render()}
+function mark(s){
+ if(!deck.length)return;
+ status[deck[i][0]]=s;
+ if(deck.length===1){render()}else{go(1)}
+}
+$("bOk").onclick=function(){mark("ok")};
+$("bRev").onclick=function(){mark("rev")};
+$("shuf").onclick=function(){for(var a=deck.length-1;a>0;a--){var j=Math.floor(Math.random()*(a+1));var t=deck[a];deck[a]=deck[j];deck[j]=t}i=0;render()};
+$("reset").onclick=function(){status={};deck=ALL.slice();i=0;render()};
+document.addEventListener("keydown",function(e){
+ if(e.key==="ArrowRight")go(1);else if(e.key==="ArrowLeft")go(-1);
+ else if((e.key===" "||e.key==="Enter")&&document.activeElement.id==="scene"){e.preventDefault();flip()}
+});
+render();
+</script>
+</body>
+</html>
